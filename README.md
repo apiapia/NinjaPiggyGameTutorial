@@ -536,5 +536,6 @@ class GameScene: SKScene,SKPhysicsContactDelegate{
 
 
 
+MORE GAME TUTORIAL : HTTP://www.iFIERO.COM 
 
  
