@@ -178,7 +178,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate{
         ninjaActionRepeat1Times = SKAction.repeat(ninjaActionAnimation, count: 1)
         // 1.属于哪个对像
         ninjaNode.physicsBody?.categoryBitMask = PhysicsCategory.Ninja
-        // 2.和谁发生碰撞
+        // 2.和谁发生碰撞并发出通知给 didBegin
         ninjaNode.physicsBody?.contactTestBitMask = PhysicsCategory.Monster
         // 3.碰撞后会弹开吗？ bounce off
         ninjaNode.physicsBody?.collisionBitMask = PhysicsCategory.None
@@ -287,23 +287,21 @@ class GameScene: SKScene,SKPhysicsContactDelegate{
         // 飞镖的位置位于Ninja的手上 0.5,0.5 X轴右移 ninjaNode.size.with 1/2
         projectileNode.position = CGPoint(x: ninjaNode.position.x + self.ninjaNode.size.width / 2 , y: ninjaNode.position.y)
         projectileNode.physicsBody = SKPhysicsBody(circleOfRadius: projectileNode.size.width / 2)
-        projectileNode.physicsBody?.isDynamic = false // 不受重力影响
+        projectileNode.physicsBody?.isDynamic = false /// 不受重力影响
         projectileNode.name = "projectile"
         projectileNode.setScale(CGFloat(maxAspectRatio))
         projectileNode.zPosition = Layer.projectile.rawValue
         projectileNode.setScale(1.0)
         
         let offset = touchLocation - projectileNode.position
-        // print("projectile offset:\(offset)")
-        if (offset.x < 0 ) {return } // Ninja Never Look Back
-        
+        if (offset.x < 0 ) { return } /// Ninja Never Look Back
         self.addChild(projectileNode)
-        
-        // 加入碰撞对象
+        /// 对象的标识
         projectileNode.physicsBody?.categoryBitMask    = PhysicsCategory.Projectile
+        /// 碰撞后发出通知
         projectileNode.physicsBody?.contactTestBitMask = PhysicsCategory.Monster
-        // projectileNode.physicsBody?.collisionBitMask   = PhysicsCategory.None
-        // 精细的对象detect，才可以飞行中的monster进行碰撞
+        /// projectileNode.physicsBody?.collisionBitMask   = PhysicsCategory.None
+        /// 精细的对象detect，才可以飞行中的monster进行碰撞
         projectileNode.physicsBody?.usesPreciseCollisionDetection = true
         
         /*

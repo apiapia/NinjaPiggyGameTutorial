@@ -60,7 +60,7 @@ class GameStart:SKScene {
             let touchLocation = touch.location(in: self)
             // 点击开始游戏按钮
             if (playNode?.contains(touchLocation))! {
-    
+                
                 let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
                 let scene = GameScene(size: CGSize(width: 2048, height: 1536))
                 scene.scaleMode = .aspectFill
@@ -68,9 +68,9 @@ class GameStart:SKScene {
             }
             // 点击学习教程按钮
             if (learningNode?.contains(touchLocation))!{
-
+                
                 UIApplication.shared.open(URL(string: "http://www.iFIERO.com")!, options: [:], completionHandler: { (error) in
-                     print("jump to http://www.iFiero.com")
+                    print("jump to http://www.iFiero.com")
                 })
             }
         }
